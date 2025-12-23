@@ -1,8 +1,8 @@
-package main
+package disbot
 
 import (
 	"fmt"
-	"io"
+	//"io"
 	"log"
 	"os"
 	"os/signal"
@@ -30,7 +30,7 @@ func init() {
 	Server_ID = os.Getenv("SERVER_ID")
 }
 
-func main() {
+func Start() {
 
 	//make new session
 	dg, err := discordgo.New("Bot " + Token)
@@ -40,7 +40,7 @@ func main() {
 		return
 	}
 
-	r, w := io.Pipe()
+	//r, w := io.Pipe()
 
 	dg.AddHandler(messageCreate)
 
@@ -84,31 +84,31 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	fmt.Println(m.Content)
 	fmt.Println(cmdPrefix)
 
-	cmd, hasPref := strings.CutPrefix(m.Content, cmdPrefix)
-
+	//cmd, hasPref := strings.CutPrefix(m.Content, cmdPrefix)
+	_, hasPref := strings.CutPrefix(m.Content, cmdPrefix)
 	if !hasPref {
 		return
 	}
 
 	fmt.Println("wow you did it")
-	return
 
-	args := []string{m.Author.ID}
+	/*
+		args := []string{m.Author.ID}
 
-	exit := false
-	for !exit {
-		var (
-			arg   string
-			found bool
-		)
+		exit := false
+		for !exit {
+			var (
+				arg   string
+				found bool
+			)
 
-		arg, cmd, found = strings.Cut(cmd, " ")
-		if !found {
-			exit = true
-			break
+			arg, cmd, found = strings.Cut(cmd, " ")
+			if !found {
+				exit = true
+				break
+			}
+			args = append(args, arg)
+
 		}
-		args = append(args, arg)
-
-	}
-
+	*/
 }
